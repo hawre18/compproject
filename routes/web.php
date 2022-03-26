@@ -30,6 +30,9 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>['auth:web
     Route::post('users/change/{id}', 'UserController@levelChange')->name('users.change');
     Route::post('users/delete/{id}', 'UserController@destroy')->name('users.delete');
     Route::get('users', 'UserController@index')->name('users.index');
+    Route::resource('customers','CustomerController');
+    Route::post('customers/delete/{id}', 'CustomerController@destroy')->name('customers.delete');
+    Route::post('customers-image','CustomerController@imageUpload')->name('customers.image');
 });
 
 
