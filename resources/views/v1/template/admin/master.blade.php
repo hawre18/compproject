@@ -69,7 +69,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);">
+                                        <a href="{{url('/logout')}}">
                                             <i class="material-icons">power_settings_new</i>خروج
                                         </a>
                                     </li>
@@ -95,18 +95,18 @@
                             </div>
                         </div>
                         <div class="profile-usertitle">
-                            <div class="sidebar-userpic-name"> آرش خادملو </div>
+                            <div class="sidebar-userpic-name">{{Auth::guard('web')->user()->name}}</div>
                             <div class="profile-usertitle-job ">مدیر </div>
                         </div>
                     </li>
                     <li class="active">
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <span>خانه</span>
+                            <i class="fas fa-blog-alt"></i>
+                            <span>بلاگ</span>
                         </a>
                         <ul class="ml-menu">
                             <li class="active">
-                                <a href="index.html">مقالات</a>
+                                <a href="javascript:void(0);">مقالات</a>
                             </li>
                             <li>
                                 <a href="{{route('articles.create')}}">درج</a>
@@ -115,12 +115,56 @@
                                 <a href="{{route('articles.index')}}">لیست</a>
                             </li>
                         </ul>
+                        <ul class="ml-menu">
+                            <li class="active">
+                                <a href="javascript:void(0);">اخبار روز</a>
+                            </li>
+                            <li>
+                                <a href="{{route('news.create')}}">درج</a>
+                            </li>
+                            <li>
+                                <a href="{{route('news.index')}}">لیست</a>
+                            </li>
+                        </ul>
+                        <ul class="ml-menu">
+                            <li class="active">
+                                <a href="javascript:void(0);">اخبار فناوری</a>
+                            </li>
+                            <li>
+                                <a href="{{route('technologies.create')}}">درج</a>
+                            </li>
+                            <li>
+                                <a href="{{route('technologies.index')}}">لیست</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="pages/apps/calendar.html">
-                            <i class="far fa-calendar"></i>
-                            <span>رویدادها</span>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="far fa-users"></i>
+                            <span>مدیریت کاربران</span>
                         </a>
+                        <ul class="ml-menu">
+                            <li class="active">
+                                <a href="javascript:void(0);">کارمندان</a>
+                            </li>
+                            <li>
+                                <a href="{{route('users.index')}}">لیست</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="active">
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="fas fa-blog-alt"></i>
+                            <span>اسلایدر</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li class="active">
+                                <a href="{{route('slides.create')}}">درج</a>
+                            </li>
+                            <li>
+                                <a href="{{route('slides.index')}}">لیست</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

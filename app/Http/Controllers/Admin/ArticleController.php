@@ -9,6 +9,7 @@ use App\Models\Image;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use SweetAlert;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -53,7 +54,7 @@ class ArticleController extends Controller
             $article->body=$request->input('body');
             $article->image_id=$request->input('article_image');;
             $article->status=$request->input('status');
-            $article->user_id=1;
+            $article->user_id=Auth::user()->id;
             $article->save();
             alert()->success('عملیات درج موفقیت آمیز بود', 'موفقیت آمیز')->autoclose(2000)->persistent('ok');
             return redirect('/admin/articles');
@@ -110,7 +111,7 @@ class ArticleController extends Controller
             $article->body=$request->input('body');
             $article->image_id=$request->input('article_image');;
             $article->status=$request->input('status');
-            $article->user_id=1;
+            $article->user_id=Auth::user()->id;
             $article->save();
             alert()->success('عملیات ویرایش موفقیت آمیز بود')->autoclose(2000)->persistent('ok');
             return redirect('/admin/articles');

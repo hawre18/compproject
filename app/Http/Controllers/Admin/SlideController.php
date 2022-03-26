@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Technology;
 use App\Models\Image;
+use App\Models\Slide;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use SweetAlert;
-use Illuminate\Support\Facades\Auth;
 
-class TechnologyController extends Controller
+class SlideController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +19,8 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        $technologies=Technology::with('image')->paginate(10);
-        return view('v1.index.admin.technology.index',compact(['technologies']));
+        $slides=Slide::with('image')->paginate(10);
+        return view('v1.index.admin.slide.index',compact(['slides']));
     }
 
     /**
@@ -31,7 +30,7 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        return view('v1.index.admin.technology.create');
+        return view('v1.index.admin.slide.create');
     }
 
     /**
@@ -43,26 +42,24 @@ class TechnologyController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'body' => 'required|min:150',
             'title' => 'required|min:10',
-            'technology_image' => 'required'
+            'slide_image' => 'required'
         ]);
         
         try{
-            $technology=new Technology();
-            $technology->title=$request->input('title');
-            $technology->body=$request->input('body');
-            $technology->image_id=$request->input('technology_image');;
-            $technology->status=$request->input('status');
-            $technology->user_id=Auth::user()->id;
-            $technology->save();
+            $slide=new Slide();
+            $slide->title=$request->input('title');
+            $slide->link=$request->input('link');
+            $slide->image_id=$request->input('slide_image');;
+            $slide->status=$request->input('status');
+            $slide->save();
             alert()->success('عملیات درج موفقیت آمیز بود', 'موفقیت آمیز')->autoclose(2000)->persistent('ok');
-            return redirect('/admin/technologies');
+            return redirect('/admin/slides');
         }
         catch (\Exception $m){
             return $m;
             alert()->error('oops', 'خطا')->autoclose(2000)->persistent('ok');
-            return redirect('/admin/technologies');
+            return redirect('/admin/slides');
         }
     }
 
@@ -74,8 +71,8 @@ class TechnologyController extends Controller
      */
     public function show($id)
     {
-        $technology=Technology::with('image')->findorfail($id);
-        return view('v1.index.admin.technology.show',compact(['technology']));
+        $slide=Slide::with('image')->findorfail($id);
+        return view('v1.index.admin.slide.show',compact(['slide']));
     }
 
     /**
@@ -86,8 +83,8 @@ class TechnologyController extends Controller
      */
     public function edit($id)
     {
-        $technology=Technology::with('image')->findorfail($id);
-        return view('v1.index.admin.technology.edit',compact(['technology']));
+        $slide=Slide::with('image')->findorfail($id);
+        return view('v1.index.admin.slide.edit',compact(['slide']));
         
     }
 
@@ -101,25 +98,23 @@ class TechnologyController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate(request(), [
-            'body' => 'required|min:150',
             'title' => 'required|min:10',
-            'technology_image' => 'required'
+            'slide_image' => 'required'
         ]);
         
         try{
-            $technology=Technology::findorfail($id);
-            $technology->title=$request->input('title');
-            $technology->body=$request->input('body');
-            $technology->image_id=$request->input('technology_image');;
-            $technology->status=$request->input('status');
-            $technology->user_id=Auth::user()->id;
-            $technology->save();
+            $slide=Slide::findorfail($id);
+            $slide->title=$request->input('title');
+            $slide->link=$request->input('link');
+            $slide->image_id=$request->input('slide_image');;
+            $slide->status=$request->input('status');
+            $slide->save();
             alert()->success('عملیات ویرایش موفقیت آمیز بود')->autoclose(2000)->persistent('ok');
-            return redirect('/admin/technologies');
+            return redirect('/admin/slides');
         }
         catch (\Exception $m){
             alert()->error('oops', 'خطا')->autoclose(2000)->persistent('ok');
-            return redirect('/admin/technologies');
+            return redirect('/admin/slides');
         }
     }
 
@@ -131,7 +126,7 @@ class TechnologyController extends Controller
      */
     public function destroy($id)
     {
-        $row = Technology::where('id', $id)->first();
+        $row = Slide::where('id', $id)->first();
         $row->delete();
         return back();
     }
@@ -141,14 +136,14 @@ class TechnologyController extends Controller
         $filename=time().$uploadedFile->getClientOriginalName();
         $original_name=$uploadedFile->getClientOriginalName();
         Storage::disk('local')->putFileas(
-            'public/images/technologies',$uploadedFile,$filename
+            'public/images/slides',$uploadedFile,$filename
         );
         $image=new Image();
         $image->original_name=$original_name;
         $image->path=$filename;
         $image->save();
         return response()->json([
-            'technology_image'=>$image->id
+            'slide_image'=>$image->id
         ]);
     }
 }
