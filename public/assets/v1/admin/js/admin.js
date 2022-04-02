@@ -1,3 +1,5 @@
+
+
 'use strict';
 $(function () {
     $.MyAdmin.browser.activate();
@@ -16,6 +18,7 @@ $(function () {
         setSkinListHeightAndScroll(false);
         setSettingListHeightAndScroll(false);
     });
+   
     callFullScreen();
 
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);

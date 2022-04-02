@@ -163,7 +163,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         Hekmatinasser\Verta\Laravel\VertaServiceProvider::class,
-
         /*
          * Package Service Providers...
          */

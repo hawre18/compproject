@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use SweetAlert;
 
+
 class CustomerController extends Controller
 {
     /**
@@ -42,14 +43,19 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
+            'name' => 'required|min:8',
             'body' => 'required|min:150',
-            'title' => 'required|min:10',
+            'title' => 'required|min:8',
+            'start_date' => 'required|date',
             'customer_image' => 'required'
         ]);
         
         try{
             $customer=new Customer();
+            $customer->name=$request->input('name');
             $customer->title=$request->input('title');
+            $customer->start_date=new Carbon($request->input('start_date'));
+            $customer->end_date=$request->input('end_date');
             $customer->body=$request->input('body');
             $customer->image_id=$request->input('customer_image');;
             $customer->status=$request->input('status');
@@ -58,6 +64,7 @@ class CustomerController extends Controller
             return redirect('/admin/customers');
         }
         catch (\Exception $m){
+            return $m;
             alert()->error('oops', 'خطا')->autoclose(2000)->persistent('ok');
             return redirect('/admin/customers');
         }

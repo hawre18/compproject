@@ -21,10 +21,14 @@
         "postcss": "^8.4.6",
         "postcss-import": "^14.0.2",
         "resolve-url-loader": "^3.1.2",
+        "sanjab-persian-date-picker": "^0.1.2",
         "sass": "^1.32.11",
         "sass-loader": "^11.0.1",
         "tailwindcss": "^3.0.18",
         "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "persian-datepicker": "^1.2.0"
     }
 }

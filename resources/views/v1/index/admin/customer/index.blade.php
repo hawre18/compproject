@@ -34,13 +34,13 @@
                                         <td class="text-center"><a style="color: black;" href="{{route('customers.show',$customer->id)}}">{{mb_substr($customer->name,0,20)}}</a></td>
                                         <td class="text-center"><a style="color: black;" href="{{route('customers.show',$customer->id)}}">{{mb_substr($customer->title,0,20)}}</a></td>
                                         <td class="text-center"><a style="color: black;" href="{{route('customers.show',$customer->id)}}">{!!mb_substr($customer->body,0,20)!!}</a></td>
-                                        <td class="text-center"><span class="label label-success">{{$customer->status}}</span></td>
-                                        <td class="text-center"><span class="label label-success">{{\Hekmatinasser\Verta\Verta::instance($customer->start_date)->formatDifference(\Hekmatinasser\Verta\Verta::today('Asia/Tehran'))}}</span></td>
-                                        <td class="text-center"><span class="label label-success">{{\Hekmatinasser\Verta\Verta::instance($customer->end_date)->formatDifference(\Hekmatinasser\Verta\Verta::today('Asia/Tehran'))}}</span></td>
+                                        <td class="text-center"><span class="label label-success">@if($customer->status==1)در حال همکاری@else اتمام همکاری @endif</span></td>
+                                        <td class="text-center"><span class="label label-success">{{\Hekmatinasser\Verta\Verta::parse($customer->start_date)}}</span></td>
+                                        <td class="text-center">@if($customer->end_date!=null)<span class="label label-success">{{\Hekmatinasser\Verta\Verta::parse($customer->end_date)}}</span>@else <span class="label label-success">-----</span>@endif</td>
                                         <td class="text-center" style="width: 100px; height:100px;"><a style="color: black;" href="{{route('customers.show',$customer->id)}}"><img src="{{asset('storage/images/customers/'.$customer->image->path)}}"></a></td>
                                         <td>
-                                            <a href="{{route('customers.edit',$article->id)}}"class="btn tblActnBtn"><i class="material-icons">mode_edit</i></a>
-                                            <a href="" class="button" data-id="{{$article->id}}"class="btn tblActnBtn"><i class="material-icons">mode_delete</i></a>
+                                            <a href="{{route('customers.edit',$customer->id)}}"class="btn tblActnBtn"><i class="material-icons">mode_edit</i></a>
+                                            <a href="" class="button" data-id="{{$customer->id}}"class="btn tblActnBtn"><i class="material-icons">mode_delete</i></a>
                                         </td>
                                     </tr> 
                                     @endforeach
