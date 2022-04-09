@@ -105,22 +105,27 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate(request(), [
+            'name' => 'required|min:8',
             'body' => 'required|min:150',
-            'title' => 'required|min:10',
-            'customer_image' => 'required'
+            'title' => 'required|min:8',
+            'start_date' => 'required|date',
         ]);
         
         try{
             $customer=Customer::findorfail($id);
+            $customer->name=$request->input('name');
             $customer->title=$request->input('title');
+            $customer->start_date=new Carbon($request->input('start_date'));
+            $customer->end_date=$request->input('end_date');
             $customer->body=$request->input('body');
             $customer->image_id=$request->input('customer_image');;
             $customer->status=$request->input('status');
             $customer->save();
-            alert()->success('عملیات ویرایش موفقیت آمیز بود')->autoclose(2000)->persistent('ok');
+            alert()->success('عملیات ویرایش موفقیت آمیز بود', 'موفقیت آمیز')->autoclose(2000)->persistent('ok');
             return redirect('/admin/customers');
         }
         catch (\Exception $m){
+            return $m;
             alert()->error('oops', 'خطا')->autoclose(2000)->persistent('ok');
             return redirect('/admin/customers');
         }

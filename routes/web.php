@@ -34,5 +34,14 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>['auth:web
     Route::post('customers/delete/{id}', 'CustomerController@destroy')->name('customers.delete');
     Route::post('customers-image','CustomerController@imageUpload')->name('customers.image');
 });
+Route::group(['namespace'=>'App\Http\Controllers\User'],function(){
+    Route::get('/','HomeController@index');
+    Route::get('/news','BlogController@indexNews')->name('news.index');
+    Route::get('/technology','BlogController@technologyIndex')->name('technology.index');
+    Route::get('/article','BlogController@articleIndex')->name('article.index');
+    Route::get('/contact','HomeController@contact')->name('contacts');
+    Route::post('news/details/{id}', 'BlogController@newsDetails')->name('news.details');
+});
+
 
 

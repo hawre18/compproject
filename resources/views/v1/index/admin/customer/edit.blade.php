@@ -12,47 +12,56 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="body">
-                        <form method="POST" action="/admin/articles/{{$article->id}}">
+                        <form method="POST" action="/admin/customers/{{$customer->id}}">
                             @csrf
                             <input type="hidden" name="_method" value="PATCH">
-                            <label class="col-lg-4 col-form-label required fw-bold fs-6">عنوان مقاله</label>
-                            <input type="text" name="title" value="{{$article->title}}">
-                            <label class="col-lg-4 col-form-label required fw-bold fs-6">متن مقاله</label>
-                            <textarea type="text" name="body">{{$article->body}}</textarea>
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6"> نام مشتری</label>
+                            <input type="text" name="name" value="{{$customer->name}}">
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">عنوان پروژه مشتری</label>
+                            <input type="text" name="title" value="{{$customer->title}}">
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">درباره مشتتری</label>
+                            <textarea type="text" name="body">{{$customer->body}}</textarea>
                             <div class="form-group">
-                                <label>تصویر مقاله</label>
-                                <input type="hidden" value="{{$article->image->id}}" name="imageo"><img src="{{asset('storage/images/article/'.$article->image->path)}}">
+                                <label>تصویر پروژه</label>
+                                <input type="hidden" value="{{$customer->image->id}}" name="imageo"><img src="{{asset('storage/images/customers/'.$customer->image->path)}}">
                             </div>
                             <div class="row mb-6">
-                                <label class="col-lg-4 col-form-label required fw-bold fs-6">تصویر مقاله</label>
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">تصویر جدید پروژه</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="hidden" name="article_image" id="article-image" value="{{$article->image_id}}">
+                                    <input type="hidden" name="customer_image" id="customer-image" value="{{$customer->image_id}}">
                                     <div id="photo" class="dropzone"></div>
                                 </div>
                             </div>
-                            @if ($article->status==1)
+                                <label class="form-label">تاریخ شروع همکاری (شمسی)</label>
+                                <input type="text"  class="form-control" value="{{$customer->start_date}}" name="start_date" required>
+                            @if ($customer->status==1)
                             <div class="form-group">
                                 <label>
-                                    <input class="with-gap" value="1" name="status" type="radio" checked />
-                                    <span>منتشر شده</span>
+                                    <input class="with-gap" value="1" name="status" type="radio" checked id="hok"  onclick="hok1()"/>
+                                    <span>در حال همکاری</span>
                                 </label>
                                 <label>
-                                    <input class="with-gap" value="0" name="status" type="radio" />
-                                    <span>غیرفعال</span>
+                                    <input class="with-gap" value="0" name="status" type="radio" id="hok2"  onclick="hok1()"/>
+                                    <span>اتمام مکاری</span>
                                 </label>
                             </div>
                             @else
                             <div class="form-group">
                                 <label>
-                                    <input class="with-gap" value="1" name="status" type="radio" />
-                                    <span>منتشر شده</span>
+                                    <input class="with-gap" value="1" name="status" type="radio" id="hok"  onclick="hok1()"/>
+                                    <span>در حال همکاری</span>
                                 </label>
                                 <label>
-                                    <input class="with-gap" value="0" name="status" type="radio" checked />
-                                    <span>غیرفعال</span>
+                                    <input class="with-gap" value="0" name="status" type="radio" id="hok2"  onclick="hok1()" checked/>
+                                    <span>اتمام مکاری</span>
                                 </label>
                             </div>
                             @endif
+                            <div class="form-group form-float" id="end_date">
+                                <div class="form-line input-group">    
+                                <input type="text"  class="form-control" value="{{$customer->end_date}}" name="end_date">
+                                <label class="form-label">تاریخ پایان همکاری (شمسی)</label>
+                            </div>
                             <button type="submit">ثبت</button>
                         </form>
                     </div>
@@ -66,6 +75,21 @@
 @section('ckdrop')
 <script type="text/javascript" src="{{asset('assets/v1/admin/js/dropzone.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/v1/admin/js/ckeditor/ckeditor.js')}}"></script>
+<script>
+    const hok = document.querySelector('#hok');
+    const hok2 = document.querySelector('#hok2');
+
+    hok.addEventListener('change', hok1);
+    hok2.addEventListener('change', hok1);
+
+    function hok1() {
+        if (document.getElementById("hok2").checked) {
+            document.getElementById("end_date").style.display = "block";
+        } else {
+                document.getElementById("end_date").style.display = "none";
+            }
+    }
+</script>
 <script>
 Dropzone.autoDiscover=false;
 var drop = new Dropzone('#photo', {
